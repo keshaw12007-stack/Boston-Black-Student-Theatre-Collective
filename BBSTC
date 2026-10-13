@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Boston Black Student Theatre Collective</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout concept: a playbill. A plum "stage" band opens the page under a row of chasing marquee bulbs,
+   then plain paper sections read like the pages of a program: mission, call sheet, season plan, venues. */
+:root {
+  --bg: #F5F2F7;
+  --fg: #22112B;
+  --muted: #5F5069;
+  --rule: #D6CBDD;
+  --curtain: #8E1F3D;
+  --spot: #E8A317;
+  --stage: #2A1436;
+  --stage-fg: #F6EFF8;
+  --stage-muted: #C9B8D2;
+  --focus: #1B5FD6;
+  --display: "Bricolage Grotesque", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Newsreader", Georgia, "Times New Roman", serif;
+  --mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #16101C; --fg: #F1EAF4; --muted: #BBAAC6; --rule: #3A2A46;
+    --curtain: #F07B93; --spot: #F0B23A; --stage: #0F0A14; --stage-fg: #F6EFF8; --stage-muted: #BBAAC6;
+    --focus: #8CB4FF; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #16101C; --fg: #F1EAF4; --muted: #BBAAC6; --rule: #3A2A46;
+  --curtain: #F07B93; --spot: #F0B23A; --stage: #0F0A14; --stage-fg: #F6EFF8; --stage-muted: #BBAAC6;
+  --focus: #8CB4FF; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg); color: var(--fg);
+  font-family: var(--body); font-size: 1.125rem; line-height: 1.6;
+  padding-inline: 0;
+}
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; line-height: 1.02; letter-spacing: -0.01em; }
+p { margin: 0; text-wrap: pretty; }
+.wrap { width: 100%; max-width: 1120px; margin-inline: auto; padding-inline: clamp(16px, 5vw, 48px); }
+.label { font-family: var(--mono); font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; }
+
+/* Top bar */
+.bar {
+  position: sticky; top: 0; z-index: 5;
+  background: var(--stage); color: var(--stage-fg);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.bar .name { font-family: var(--display); font-weight: 700; font-size: 1rem; letter-spacing: .01em; text-decoration: none; min-width: 0; }
+.bar nav { display: flex; gap: 20px; }
+.bar nav a { text-decoration: none; font-family: var(--mono); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--stage-muted); }
+.bar nav a:hover { color: var(--stage-fg); }
+.bar nav a.join { color: var(--spot); }
+@media (max-width: 720px) { .bar nav a:not(.join) { display: none; } }
+
+/* Hero */
+.hero { background: var(--stage); color: var(--stage-fg); padding-block: clamp(40px, 8vw, 96px) 0; }
+.hero .kicker { color: var(--spot); }
+.hero h1 {
+  font-weight: 800; font-stretch: 78%; font-variation-settings: "wdth" 78;
+  font-size: clamp(2.6rem, 9.5vw, 6.6rem); margin-top: 20px; max-width: 14ch;
+}
+.hero h1 em { font-style: normal; color: var(--spot); }
+.hero .lede { margin-top: 28px; max-width: 34em; font-size: clamp(1.15rem, 2.2vw, 1.4rem); color: var(--stage-muted); }
+.hero .lede strong { color: var(--stage-fg); font-weight: 500; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+.btn {
+  display: inline-block; text-decoration: none; padding: 14px 22px; border-radius: 2px;
+  font-family: var(--mono); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 500;
+}
+.btn.primary { background: var(--spot); color: #22112B; }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.ghost { border: 1px solid var(--stage-muted); color: var(--stage-fg); }
+.btn.ghost:hover { border-color: var(--stage-fg); }
+
+.facts {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0;
+  margin-top: clamp(40px, 7vw, 72px); border-top: 1px solid rgba(255,255,255,.16);
+}
+.facts div { padding: 18px 16px 22px 0; min-width: 0; }
+.facts dt { color: var(--stage-muted); }
+.facts dd { margin: 6px 0 0; font-family: var(--display); font-weight: 600; font-size: 1.15rem; line-height: 1.2; }
+@media (max-width: 720px) { .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Marquee bulbs */
+.bulbs { position: relative; height: 22px; margin-top: 0; background: var(--stage); }
+.bulbs::before, .bulbs::after {
+  content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(circle, var(--spot) 0 3.5px, transparent 4.5px);
+  background-size: 28px 22px; background-repeat: repeat-x; background-position: 8px center;
+  animation: chase 1.6s steps(1, end) infinite;
+}
+.bulbs::after { background-position: 22px center; animation-delay: -.8s; }
+@keyframes chase { 0% { opacity: 1; } 50% { opacity: .22; } }
+@media (prefers-reduced-motion: reduce) { .bulbs::before, .bulbs::after { animation: none; opacity: .9; } }
+
+/* Sections */
+section { padding-block: clamp(56px, 9vw, 112px); border-bottom: 1px solid var(--rule); }
+section:last-of-type { border-bottom: 0; }
+.sec-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; margin-bottom: clamp(28px, 5vw, 48px); }
+.sec-head .label { color: var(--curtain); }
+.sec-head h2 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 700; font-stretch: 85%; font-variation-settings: "wdth" 85; max-width: 18ch; }
+
+.duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(28px, 5vw, 72px); }
+.duo h3 { font-size: 1rem; font-family: var(--mono); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--curtain); margin-bottom: 14px; }
+.duo p { font-size: clamp(1.25rem, 2.4vw, 1.6rem); line-height: 1.4; }
+@media (max-width: 800px) { .duo { grid-template-columns: minmax(0, 1fr); } }
+
+.pull {
+  margin-top: clamp(40px, 6vw, 72px); padding-top: 28px; border-top: 2px solid var(--fg);
+  max-width: 40em; color: var(--muted);
+}
+.pull strong { color: var(--fg); font-weight: 600; }
+
+/* Program lists */
+.lineup { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(28px, 5vw, 72px); }
+.lineup li { padding: 22px 0; border-top: 1px solid var(--rule); min-width: 0; }
+.lineup h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+.lineup p { color: var(--muted); }
+@media (max-width: 800px) { .lineup { grid-template-columns: minmax(0, 1fr); } }
+
+.table-scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 520px; }
+th { text-align: left; font-family: var(--mono); font-weight: 500; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 0 16px 12px 0; border-bottom: 2px solid var(--fg); }
+td { padding: 18px 16px 18px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td:first-child { font-family: var(--display); font-weight: 700; font-size: 1.25rem; white-space: nowrap; }
+.note { margin-top: 24px; color: var(--muted); max-width: 40em; }
+
+/* Season plan */
+.plan { list-style: none; margin: 0; padding: 0; }
+.plan li { display: grid; grid-template-columns: minmax(150px, 220px) minmax(0, 1fr); gap: 8px clamp(20px, 4vw, 56px); padding: 26px 0; border-top: 1px solid var(--rule); }
+.plan .when { font-family: var(--mono); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--curtain); padding-top: 6px; }
+.plan h3 { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; }
+.plan p { color: var(--muted); max-width: 42em; }
+@media (max-width: 640px) { .plan li { grid-template-columns: minmax(0, 1fr); } }
+
+/* Venues */
+.venues { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); }
+.venue { border-top: 2px solid var(--fg); padding-top: 18px; min-width: 0; }
+.venue .label { color: var(--curtain); }
+.venue h3 { font-size: 1.6rem; font-weight: 700; margin: 8px 0 10px; }
+.venue p { color: var(--muted); }
+.venue a { display: inline-block; margin-top: 14px; font-family: var(--mono); font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--fg); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+@media (max-width: 860px) { .venues { grid-template-columns: minmax(0, 1fr); } }
+
+/* Join */
+.join-band { background: var(--stage); color: var(--stage-fg); border-bottom: 0; }
+.join-band .sec-head .label { color: var(--spot); }
+.ways { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); }
+.ways div { border-top: 1px solid rgba(255,255,255,.28); padding-top: 18px; min-width: 0; }
+.ways h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+.ways p { color: var(--stage-muted); }
+@media (max-width: 860px) { .ways { grid-template-columns: minmax(0, 1fr); } }
+.contact { margin-top: clamp(36px, 5vw, 56px); padding: 22px 0 0; border-top: 1px solid rgba(255,255,255,.28); color: var(--stage-muted); }
+.contact strong { color: var(--stage-fg); font-weight: 500; }
+
+footer { background: var(--stage); color: var(--stage-muted); padding-block: 32px 44px; border-top: 1px solid rgba(255,255,255,.12); font-size: .95rem; }
+footer .wrap { display: grid; gap: 8px; }
+footer .fname { font-family: var(--display); font-weight: 700; color: var(--stage-fg); font-size: 1.05rem; }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="name" href="#top">Boston Black Student Theatre Collective</a>
+    <nav aria-label="Sections">
+      <a href="#mission">Mission</a>
+      <a href="#make">What we make</a>
+      <a href="#plan">Plan</a>
+      <a href="#spaces">Spaces</a>
+      <a class="join" href="#join">Join</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <p class="label kicker">Boston &middot; Student run &middot; Plays and musicals</p>
+      <h1>Black students telling Black stories on <em>Boston</em> stages.</h1>
+      <p class="lede">A student-run collective that brings <strong>Black college students from across Boston</strong> together to write, direct, design and perform plays and musicals, and to build a community
